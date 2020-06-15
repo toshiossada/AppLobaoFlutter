@@ -17,7 +17,6 @@ class CacheInterceptor extends InterceptorsWrapper {
       }
     }
 
-    // TODO: implement onRequest
     return super.onRequest(options);
   }
 
@@ -50,8 +49,9 @@ class CacheInterceptor extends InterceptorsWrapper {
 
       //return Response(data: res, statusCode: 200);
       return Response(data: null, statusCode: 200);
-    } else {
-      return Response(data: null, statusCode: 500);
     }
+    // else {
+    //   return Response(data: null, statusCode: 500);
+    // }
   }
 }

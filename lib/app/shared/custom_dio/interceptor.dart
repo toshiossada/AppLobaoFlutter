@@ -13,11 +13,11 @@ class CustomInterceptors extends InterceptorsWrapper {
     var user = await userService.getCurrentUser();
     if (user != null) {
       if (options.headers['Authorization'] == null) {
-        dio.client.lock();
+        dio.lock();
 
         options.headers.addAll({"Authorization": 'Bearer ${user.accessToken}'});
 
-        dio.client.unlock();
+        dio.unlock();
       }
     }
     print(
@@ -25,7 +25,6 @@ class CustomInterceptors extends InterceptorsWrapper {
     if (options.data != null) print(options.data.toJson());
     print('Authorization: ${options.headers['Authorization']}');
 
-    // TODO: implement onRequest
     return super.onRequest(options);
   }
 
@@ -33,7 +32,7 @@ class CustomInterceptors extends InterceptorsWrapper {
   Future onResponse(Response response) {
     print('Response[${response.statusCode}] => PATH: ${response.request.path}');
 
-    // TODO: implement onResponse
+
     return super.onResponse(response);
   }
 
@@ -50,11 +49,11 @@ class CustomInterceptors extends InterceptorsWrapper {
 
       if (user.accessToken == options.headers['Authorization']) {
         options.headers['Authorization'] = user.accessToken;
-        return dio.client.request(options.path, options: options);
+        return dio.request(options.path, options: options);
       }
-      dio.client.lock();
-      dio.client.interceptors.responseLock.lock();
-      dio.client.interceptors.errorLock.lock();
+      dio.lock();
+      dio.interceptors.responseLock.lock();
+      dio.interceptors.errorLock.lock();
 
       return userService
           .authenticate(
@@ -63,10 +62,10 @@ class CustomInterceptors extends InterceptorsWrapper {
           .then((d) {
         options.headers['Authorization'] = d.accessToken;
       }).whenComplete(() {
-        dio.client.unlock();
-        dio.client.interceptors.responseLock.unlock();
-        dio.client.interceptors.errorLock.unlock();
-      }).then((e) => dio.client.request(options.path, options: options));
+        dio.unlock();
+        dio.interceptors.responseLock.unlock();
+        dio.interceptors.errorLock.unlock();
+      }).then((e) => dio.request(options.path, options: options));
     } else {
       throw e.response.data[0] ?? e.response.data['errorMessage'];
     }

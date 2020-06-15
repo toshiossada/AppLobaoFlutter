@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:projeto_lobao/app/shared/repositories/payslip_repository.dart';
 import 'package:projeto_lobao/app/shared/services/payslip_service.dart';
 import 'package:projeto_lobao/app/shared/repositories/user_repository.dart';
@@ -26,13 +25,8 @@ class AppModule extends MainModule {
             (i) => PayslipRepository(dio: i.get<CustomDio>())),
         Bind<IPayslipService>(
             (i) => PayslipService(repository: i.get<IPayslipRepository>())),
-            
         Bind<IUserRepository>((i) => UserRepository(dio: i.get<CustomDio>())),
-
-
-        
-        Bind<IUserLocalStorageRepository>(
-            (i) => UserLocalStorageRepository()),
+        Bind<IUserLocalStorageRepository>((i) => UserLocalStorageRepository()),
         Bind<IUserService>((i) => UserService(
               userRepository: i.get<IUserRepository>(),
               storage: i.get<IUserStorageService>(),
@@ -41,8 +35,7 @@ class AppModule extends MainModule {
             userLocalStorageRepositoryRepository:
                 i.get<IUserLocalStorageRepository>())),
         Bind((i) => AppController()),
-        Bind((i) => Dio()),
-        Bind((i) => CustomDio(i.get<Dio>())),
+        Bind((i) => CustomDio()),
       ];
 
   @override

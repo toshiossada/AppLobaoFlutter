@@ -7,11 +7,9 @@ import 'package:projeto_lobao/app/modules/home/pages/payslip/payslip_controller.
 import 'package:projeto_lobao/app/modules/home/home_module.dart';
 import 'package:projeto_lobao/app/shared/repositories/interfaces/payslip_repository_interface.dart';
 import 'package:projeto_lobao/app/shared/repositories/mocks/payslip_repository_mock.dart';
-import 'package:projeto_lobao/app/shared/services/payslip_service.dart';
 
 void main() {
   PayslipController _payslipController;
-  PayslipService _service;
 
   setUp(() {
     initModule(AppModule(), changeBinds: [

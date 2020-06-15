@@ -1,15 +1,15 @@
 import 'dart:io';
 
+import 'package:dio/native_imp.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:projeto_lobao/app/shared/custom_dio/custom_dio.dart';
 import 'package:projeto_lobao/app/shared/model/month_model.dart';
 import 'package:projeto_lobao/app/shared/model/payment_model.dart';
 
 import 'interfaces/payslip_repository_interface.dart';
 
 class PayslipRepository extends Disposable implements IPayslipRepository {
-  final CustomDio dio;
+  final DioForNative dio;
   final String controllerName = '/payslip';
   PayslipRepository({this.dio});
   @override
@@ -36,7 +36,7 @@ class PayslipRepository extends Disposable implements IPayslipRepository {
   Future<String> downloadPdf(MonthModel month, PaymentModel payment) async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = '${appDocDir.path}/holerite.pdf';
-    await dio.client.download(
+    await dio.download(
       'http://www.rrsantos.com.br/holerite/holerite.pdf',
       appDocPath,
       onReceiveProgress: _showDownloadProgress,

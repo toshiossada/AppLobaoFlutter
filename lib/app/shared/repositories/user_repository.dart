@@ -1,13 +1,12 @@
+import 'package:dio/native_imp.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_lobao/app/shared/custom_dio/custom_dio.dart';
 import 'package:projeto_lobao/app/shared/model/authentication_model.dart';
 import 'package:projeto_lobao/app/shared/model/user_model.dart';
-import 'package:projeto_lobao/app/shared/utils/utils.dart';
 
 import 'interfaces/user_respository_interface.dart';
 
 class UserRepository extends Disposable implements IUserRepository {
-  final CustomDio dio;
+  final DioForNative dio;
   final String controllerName = '/messages';
   UserRepository({this.dio});
 

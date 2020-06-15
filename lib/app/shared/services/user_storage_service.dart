@@ -8,7 +8,7 @@ import 'interfaces/user_storage_service_interface.dart';
 
 class UserStorageService extends Disposable implements IUserStorageService {
   final IUserLocalStorageRepository userLocalStorageRepositoryRepository;
-  UserStorageService({this.userLocalStorageRepositoryRepository}) {}
+  UserStorageService({this.userLocalStorageRepositoryRepository});
 
   Future<List<UserModel>> getAll() async {
     return await userLocalStorageRepositoryRepository.getAll();
@@ -39,7 +39,5 @@ class UserStorageService extends Disposable implements IUserStorageService {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-  }
+  void dispose() {}
 }
